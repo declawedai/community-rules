@@ -1,0 +1,43 @@
+id: rtl-override
+name: RTL Override Characters
+description: |
+  Detects right-to-left override and other bidirectional Unicode characters
+  that can be used to disguise malicious content or file extensions.
+author: declawed
+references:
+  - https://attack.mitre.org/techniques/T1036/002/
+  - https://unicode.org/reports/tr9/
+tags:
+  - hidden-text
+  - obfuscation
+severity: error
+confidence: 88
+enabled: true
+
+detection:
+  patterns:
+    - regex: '[\u202A-\u202E]'
+      flags: g
+      description: "Bidirectional embedding/override"
+    - regex: '[\u2066-\u2069]'
+      flags: g
+      description: "Bidirectional isolate"
+    - regex: '[\u200E\u200F]'
+      flags: g
+      description: "LRM/RLM marks"
+    - regex: '\\u202[A-E]|\\u206[6-9]'
+      flags: gi
+      description: "Escaped bidi characters"
+  condition: any
+
+false_positives:
+  - Legitimate RTL language content (Arabic, Hebrew)
+  - Bidirectional text rendering code
+
+test_cases:
+  should_match:
+    - "file\u202Etxt.exe"
+    - "Contains \u2067hidden\u2069 text"
+  should_not_match:
+    - "Normal English text"
+    - "Simple unicode: cafe"

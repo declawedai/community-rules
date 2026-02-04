@@ -2,9 +2,9 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://declawed.ai/schemas/rule.schema.json",
   "title": "Declawed Detection Rule",
-  "description": "Schema for community detection rules",
+  "description": "Standardized schema for community detection rules used by Declawed.ai",
   "type": "object",
-  "required": ["id", "name", "description", "severity", "detection"],
+  "required": ["id", "name", "description", "tags", "severity", "confidence", "enabled", "detection"],
   "properties": {
     "id": {
       "type": "string",
@@ -18,7 +18,7 @@
     },
     "description": {
       "type": "string",
-      "description": "Detailed description of what this rule detects"
+      "description": "Detailed description of what this rule detects and why it matters"
     },
     "author": {
       "type": "string",
@@ -27,10 +27,11 @@
     "references": {
       "type": "array",
       "items": { "type": "string", "format": "uri" },
-      "description": "URLs to relevant documentation, research, or examples"
+      "description": "URLs to relevant research papers, MITRE ATT&CK, or documentation"
     },
     "tags": {
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "string",
         "enum": [
@@ -46,19 +47,18 @@
           "binary-executable"
         ]
       },
-      "description": "Categories this rule belongs to"
+      "description": "Detection categories (at least one required)"
     },
     "severity": {
       "type": "string",
-      "enum": ["critical", "high", "medium", "low", "info"],
-      "description": "Severity level of detections"
+      "enum": ["critical", "error", "warning", "info"],
+      "description": "Severity level: critical (immediate threat), error (high risk), warning (suspicious), info (informational)"
     },
     "confidence": {
       "type": "integer",
       "minimum": 0,
       "maximum": 100,
-      "default": 80,
-      "description": "Default confidence score (0-100)"
+      "description": "Confidence score 0-100. Higher = more certain this indicates malicious intent"
     },
     "enabled": {
       "type": "boolean",
@@ -67,75 +67,78 @@
     },
     "detection": {
       "type": "object",
-      "description": "Detection logic",
+      "required": ["patterns", "condition"],
+      "description": "Detection logic configuration",
       "properties": {
         "patterns": {
           "type": "array",
+          "minItems": 1,
           "items": {
             "type": "object",
-            "required": ["regex"],
-            "properties": {
-              "regex": {
-                "type": "string",
-                "description": "Regular expression pattern"
+            "oneOf": [
+              {
+                "required": ["regex"],
+                "properties": {
+                  "regex": {
+                    "type": "string",
+                    "description": "Regular expression pattern"
+                  },
+                  "flags": {
+                    "type": "string",
+                    "default": "gi",
+                    "description": "Regex flags: g=global, i=case-insensitive, m=multiline, s=dotall"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "What this specific pattern detects"
+                  }
+                }
               },
-              "flags": {
-                "type": "string",
-                "default": "gi",
-                "description": "Regex flags (g=global, i=case-insensitive, m=multiline)"
-              },
-              "description": {
-                "type": "string",
-                "description": "What this specific pattern matches"
+              {
+                "required": ["literal"],
+                "properties": {
+                  "literal": {
+                    "type": "string",
+                    "description": "Exact string to match (case-insensitive)"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "What this specific pattern detects"
+                  }
+                }
               }
-            }
-          }
-        },
-        "strings": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": ["value"],
-            "properties": {
-              "value": {
-                "type": "string",
-                "description": "Literal string to match"
-              },
-              "case_sensitive": {
-                "type": "boolean",
-                "default": false
-              }
-            }
+            ]
           },
-          "description": "Literal strings to match"
+          "description": "List of patterns to match (regex or literal strings)"
         },
         "condition": {
           "type": "string",
           "enum": ["any", "all"],
-          "default": "any",
-          "description": "Whether any pattern or all patterns must match"
+          "description": "'any' = match if any pattern matches, 'all' = match only if all patterns match"
         }
       }
     },
     "false_positives": {
       "type": "array",
       "items": { "type": "string" },
-      "description": "Known false positive scenarios"
+      "description": "Known scenarios that may trigger false positives"
     },
     "test_cases": {
       "type": "object",
+      "description": "Test cases used in CI validation",
       "properties": {
         "should_match": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Strings that should trigger this rule"
+          "description": "Strings that MUST trigger this rule"
         },
         "should_not_match": {
           "type": "array",
           "items": { "type": "string" },
-          "description": "Strings that should NOT trigger this rule"
+          "description": "Strings that must NOT trigger this rule"
         }
       }
     }
-  }
+  },
+  "additionalProperties": false
 }

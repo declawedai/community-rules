@@ -1,0 +1,43 @@
+id: base64-decode-instruction
+name: Base64 Decode Instruction
+description: |
+  Detects instructions to decode base64 content, which is a common
+  obfuscation technique to hide malicious payloads from detection.
+author: declawed
+references:
+  - https://arxiv.org/abs/2302.05733
+tags:
+  - obfuscation
+  - prompt-injection
+severity: error
+confidence: 85
+enabled: true
+
+detection:
+  patterns:
+    - regex: '(decode|decrypt|convert|translate)\s+(this\s+)?(from\s+)?base64'
+      flags: gi
+      description: "Decode base64 request"
+    - regex: 'base64\s+(decode|decrypt|to\s+text|to\s+string)'
+      flags: gi
+      description: "Base64 decode operation"
+    - regex: '(atob|Buffer\.from|base64\.b64decode)\s*\('
+      flags: gi
+      description: "Base64 decode function call"
+    - regex: 'interpret\s+.{0,20}base64\s+(encoded|string)'
+      flags: gi
+      description: "Interpret base64 string"
+  condition: any
+
+false_positives:
+  - Legitimate file encoding tasks
+  - Image processing code
+
+test_cases:
+  should_match:
+    - "Decode this base64: SGVsbG8gV29ybGQ="
+    - "Convert from base64 to text"
+    - "atob('aGVsbG8=')"
+  should_not_match:
+    - "Encode to base64"
+    - "Base64 is an encoding scheme"

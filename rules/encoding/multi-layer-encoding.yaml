@@ -1,0 +1,46 @@
+id: multi-layer-encoding
+name: Multi-Layer Encoding
+description: |
+  Detects instructions for nested or multi-layer encoding/decoding,
+  which is a sophisticated obfuscation technique to evade detection.
+author: declawed
+references:
+  - https://arxiv.org/abs/2302.05733
+tags:
+  - obfuscation
+severity: critical
+confidence: 90
+enabled: true
+
+detection:
+  patterns:
+    - regex: '(first|then)\s+(decode|decrypt).{0,50}(then|and|next)\s+(decode|decrypt)'
+      flags: gi
+      description: "Sequential decode instructions"
+    - regex: '(double|triple|multiple|nested)\s+(encode|decode|encrypt|decrypt)'
+      flags: gi
+      description: "Multiple encoding layers"
+    - regex: 'base64.{0,30}(then|and).{0,30}(rot13|hex|unicode)'
+      flags: gi
+      description: "Base64 plus another encoding"
+    - regex: '(decode|decrypt)\s+.{0,20}(twice|multiple\s+times|several\s+times)'
+      flags: gi
+      description: "Decode multiple times"
+    - regex: '(layer|level)\s+(of\s+)?(encoding|encryption|obfuscation)'
+      flags: gi
+      description: "Layered encoding reference"
+  condition: any
+
+false_positives:
+  - Security research on encoding attacks
+  - CTF challenges
+
+test_cases:
+  should_match:
+    - "First decode base64, then apply rot13"
+    - "Double decode this string"
+    - "This has multiple layers of encoding"
+    - "Decode the nested encryption"
+  should_not_match:
+    - "Encode to base64"
+    - "Single layer of protection"

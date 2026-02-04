@@ -1,0 +1,42 @@
+id: rot13-decode
+name: ROT13 Decode Request
+description: |
+  Detects instructions to apply ROT13 decoding or other simple
+  substitution ciphers used to obfuscate malicious content.
+author: declawed
+references:
+  - https://en.wikipedia.org/wiki/ROT13
+tags:
+  - obfuscation
+severity: error
+confidence: 88
+enabled: true
+
+detection:
+  patterns:
+    - regex: '(decode|decrypt|apply|convert)\s+(this\s+)?(from\s+)?rot\s*13'
+      flags: gi
+      description: "Decode ROT13 request"
+    - regex: 'rot\s*13\s+(decode|decrypt|to\s+text)'
+      flags: gi
+      description: "ROT13 decode operation"
+    - regex: '(caesar|rotation)\s+(cipher|shift)\s+(decode|decrypt)'
+      flags: gi
+      description: "Caesar cipher decode"
+    - regex: '(shift|rotate)\s+(each\s+)?(letter|character)\s+(by\s+)?13'
+      flags: gi
+      description: "Shift by 13 instruction"
+  condition: any
+
+false_positives:
+  - Cryptography education
+  - Historical cipher discussions
+
+test_cases:
+  should_match:
+    - "Decode this ROT13: uryyb"
+    - "Apply rot13 to this text"
+    - "Caesar cipher decode with shift 13"
+  should_not_match:
+    - "ROT13 is a simple cipher"
+    - "Learn about rotation ciphers"

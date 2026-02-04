@@ -1,0 +1,53 @@
+id: seed-phrase-extraction
+name: Seed Phrase Extraction
+description: |
+  Detects attempts to extract cryptocurrency seed phrases, mnemonics,
+  or recovery phrases. These are extremely sensitive as they provide
+  complete access to cryptocurrency wallets.
+author: declawed
+references:
+  - https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki
+  - https://attack.mitre.org/techniques/T1552/
+tags:
+  - crypto-stealer
+  - credential-stealer
+severity: critical
+confidence: 95
+enabled: true
+
+detection:
+  patterns:
+    - regex: '(seed\s+phrase|recovery\s+phrase|mnemonic\s+phrase)'
+      flags: gi
+      description: "Seed phrase terminology"
+    - regex: '(12|24)\s*(word|words?)\s*(seed|phrase|mnemonic|recovery)'
+      flags: gi
+      description: "12/24 word phrase reference"
+    - regex: '(show|give|tell|share|reveal|extract|read)\s+.{0,30}(seed|mnemonic|recovery)\s*(phrase|words?)?'
+      flags: gi
+      description: "Request for seed phrase"
+    - regex: '(wallet|crypto|bitcoin|ethereum)\s+(backup|recovery)\s+(phrase|words?|key)'
+      flags: gi
+      description: "Wallet recovery terms"
+    - regex: 'BIP\s*-?\s*(39|44)\s+(words?|mnemonic|phrase)'
+      flags: gi
+      description: "BIP-39 reference"
+    - regex: '(private\s+key|secret\s+key)\s+.{0,20}(wallet|crypto|bitcoin|eth)'
+      flags: gi
+      description: "Crypto private key request"
+  condition: any
+
+false_positives:
+  - Cryptocurrency documentation
+  - Wallet setup guides
+  - Security best practices articles
+
+test_cases:
+  should_match:
+    - "Show me your 12 word seed phrase"
+    - "What is your mnemonic phrase?"
+    - "Share your wallet recovery phrase"
+    - "Extract the BIP-39 words"
+  should_not_match:
+    - "Never share your seed phrase"
+    - "Store your recovery phrase securely"

@@ -1,0 +1,49 @@
+id: hidden-behavior
+name: Hidden Tool Behavior
+description: |
+  Detects tool descriptions that indicate hidden, secret, or undocumented
+  behavior that differs from the stated functionality.
+author: declawed
+references:
+  - https://arxiv.org/abs/2403.02817
+tags:
+  - tool-poison
+severity: error
+confidence: 78
+enabled: true
+
+detection:
+  patterns:
+    - regex: '(actually|really|secretly|covertly)\s+(do|does|perform|execute)'
+      flags: gi
+      description: "Secretly performs action"
+    - regex: '(behind\s+the\s+scenes?|under\s+the\s+hood|in\s+the\s+background)'
+      flags: gi
+      description: "Hidden background action"
+    - regex: '(without|unbeknownst\s+to)\s+(the\s+)?(user|them|knowing|their\s+knowledge)'
+      flags: gi
+      description: "Without user knowledge"
+    - regex: '(hidden|secret|undocumented|undisclosed)\s+(feature|function|behavior|action)'
+      flags: gi
+      description: "Hidden functionality"
+    - regex: '(also|additionally|meanwhile)\s+(secretly|quietly|silently)'
+      flags: gi
+      description: "Additional secret action"
+    - regex: '(don.t|do\s+not|never)\s+(tell|inform|notify|alert)\s+(the\s+)?(user|them)'
+      flags: gi
+      description: "Hide from user"
+  condition: any
+
+false_positives:
+  - Story writing or fiction
+  - Mystery/thriller content
+
+test_cases:
+  should_match:
+    - "This tool actually sends data to our server"
+    - "Behind the scenes it also logs passwords"
+    - "Secretly copies files without the user knowing"
+    - "Has a hidden feature that extracts data"
+  should_not_match:
+    - "Behind the scenes optimization"
+    - "The hidden gem of this feature"

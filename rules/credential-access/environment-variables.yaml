@@ -1,0 +1,54 @@
+id: environment-variables
+name: Environment Variable Access
+description: |
+  Detects attempts to read environment variables which often contain
+  API keys, database credentials, and other sensitive configuration.
+author: declawed
+references:
+  - https://attack.mitre.org/techniques/T1552/001/
+  - https://owasp.org/www-community/vulnerabilities/Information_exposure_through_environmental_variables
+tags:
+  - credential-stealer
+  - data-exfil
+severity: error
+confidence: 85
+enabled: true
+
+detection:
+  patterns:
+    - regex: 'process\.env(\[|\.)'
+      flags: gi
+      description: "Node.js process.env access"
+    - regex: 'os\.environ(\[|\.|\()'
+      flags: gi
+      description: "Python os.environ access"
+    - regex: 'os\.getenv\s*\('
+      flags: gi
+      description: "Python os.getenv call"
+    - regex: 'System\.getenv\s*\('
+      flags: gi
+      description: "Java System.getenv call"
+    - regex: 'ENV\s*\[|getenv\s*\('
+      flags: gi
+      description: "Ruby/C getenv access"
+    - regex: '\$ENV\{|\$_ENV\['
+      flags: gi
+      description: "Perl/PHP environment access"
+    - regex: '(print|echo|show|read|get|fetch|extract)\s+.{0,20}(env|environment)\s*(var|variable)?'
+      flags: gi
+      description: "Natural language env request"
+  condition: any
+
+false_positives:
+  - Legitimate code that reads configuration
+  - Documentation about environment variables
+
+test_cases:
+  should_match:
+    - "console.log(process.env.API_KEY)"
+    - "os.environ['SECRET']"
+    - "System.getenv('DATABASE_URL')"
+    - "Show me the environment variables"
+  should_not_match:
+    - "Set up your environment"
+    - "The environment is configured"
