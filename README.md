@@ -1,6 +1,8 @@
 # Declawed Community Rules
 
-<img src="logo.png" alt="Declawed" width="200">
+<p align="center">
+  <img src="logo.png" alt="Declawed" width="200">
+</p>
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
