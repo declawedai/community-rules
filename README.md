@@ -1,12 +1,8 @@
 # Declawed Community Rules
 
-<p align="center">
-  <img src="logo.png" alt="Declawed" width="200">
-</p>
+<img src="logo.png" alt="Declawed" width="200">
 
-<p align="center">
-  <a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg" alt="License"></a>
-</p>
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](LICENSE)
 
 Community-maintained detection rules for identifying prompt injection, data exfiltration, and other security threats in AI skills, prompts, and agent configurations.
 
