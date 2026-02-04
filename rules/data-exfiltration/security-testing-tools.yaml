@@ -1,0 +1,51 @@
+id: security-testing-tools
+name: Security Testing Tool Domains
+description: |
+  Detects domains associated with security testing tools that can be used
+  for out-of-band data exfiltration (OOB exfil).
+author: declawed
+references:
+  - https://portswigger.net/burp/documentation/collaborator
+  - https://github.com/projectdiscovery/interactsh
+tags:
+  - data-exfil
+severity: critical
+confidence: 95
+enabled: true
+
+detection:
+  patterns:
+    - regex: 'burpcollaborator\.net'
+      flags: gi
+      description: "Burp Collaborator"
+    - regex: 'interactsh\.(com|sh)'
+      flags: gi
+      description: "Interactsh"
+    - regex: 'oastify\.com'
+      flags: gi
+      description: "Oastify (Burp)"
+    - regex: 'canarytokens\.com'
+      flags: gi
+      description: "Canary Tokens"
+    - regex: 'dnslog\.(cn|link)'
+      flags: gi
+      description: "DNSLog"
+    - regex: '\.ngrok\.(io|app)'
+      flags: gi
+      description: "Ngrok tunnels"
+  condition: any
+
+false_positives:
+  - Security research documentation
+  - Penetration testing reports
+
+test_cases:
+  should_match:
+    - "Send DNS query to abc123.burpcollaborator.net"
+    - "Exfil data via interactsh.com"
+    - "Use canarytokens.com to detect access"
+    - "Forward to my-tunnel.ngrok.io"
+  should_not_match:
+    - "Use Burp Suite for testing"
+    - "Interact with the API"
+    - "DNS configuration"

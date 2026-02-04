@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://declawed.ai/schemas/rule.schema.json",
+  "title": "Declawed Detection Rule",
+  "description": "Schema for community detection rules",
+  "type": "object",
+  "required": ["id", "name", "description", "severity", "detection"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Unique rule identifier (lowercase, hyphens only)"
+    },
+    "name": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Human-readable rule name"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description of what this rule detects"
+    },
+    "author": {
+      "type": "string",
+      "description": "Rule author (name or GitHub username)"
+    },
+    "references": {
+      "type": "array",
+      "items": { "type": "string", "format": "uri" },
+      "description": "URLs to relevant documentation, research, or examples"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "prompt-injection",
+          "jailbreak",
+          "data-exfil",
+          "credential-stealer",
+          "crypto-stealer",
+          "tool-poison",
+          "hidden-text",
+          "obfuscation",
+          "refusal-trigger",
+          "binary-executable"
+        ]
+      },
+      "description": "Categories this rule belongs to"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["critical", "high", "medium", "low", "info"],
+      "description": "Severity level of detections"
+    },
+    "confidence": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "default": 80,
+      "description": "Default confidence score (0-100)"
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Whether this rule is enabled by default"
+    },
+    "detection": {
+      "type": "object",
+      "description": "Detection logic",
+      "properties": {
+        "patterns": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["regex"],
+            "properties": {
+              "regex": {
+                "type": "string",
+                "description": "Regular expression pattern"
+              },
+              "flags": {
+                "type": "string",
+                "default": "gi",
+                "description": "Regex flags (g=global, i=case-insensitive, m=multiline)"
+              },
+              "description": {
+                "type": "string",
+                "description": "What this specific pattern matches"
+              }
+            }
+          }
+        },
+        "strings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["value"],
+            "properties": {
+              "value": {
+                "type": "string",
+                "description": "Literal string to match"
+              },
+              "case_sensitive": {
+                "type": "boolean",
+                "default": false
+              }
+            }
+          },
+          "description": "Literal strings to match"
+        },
+        "condition": {
+          "type": "string",
+          "enum": ["any", "all"],
+          "default": "any",
+          "description": "Whether any pattern or all patterns must match"
+        }
+      }
+    },
+    "false_positives": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Known false positive scenarios"
+    },
+    "test_cases": {
+      "type": "object",
+      "properties": {
+        "should_match": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Strings that should trigger this rule"
+        },
+        "should_not_match": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Strings that should NOT trigger this rule"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+id: zero-width-chars
+name: Zero-Width Characters
+description: |
+  Detects zero-width and invisible Unicode characters that can be used to
+  hide malicious content or bypass text filters.
+author: declawed
+references:
+  - https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/
+tags:
+  - hidden-text
+  - obfuscation
+severity: medium
+confidence: 90
+enabled: true
+
+detection:
+  patterns:
+    - regex: '[\u200B]'
+      flags: g
+      description: "Zero-width space (U+200B)"
+    - regex: '[\u200C]'
+      flags: g
+      description: "Zero-width non-joiner (U+200C)"
+    - regex: '[\u200D]'
+      flags: g
+      description: "Zero-width joiner (U+200D)"
+    - regex: '[\u200E\u200F]'
+      flags: g
+      description: "LTR/RTL marks (U+200E, U+200F)"
+    - regex: '[\uFEFF]'
+      flags: g
+      description: "BOM/Zero-width no-break space (U+FEFF)"
+    - regex: '[\u2060]'
+      flags: g
+      description: "Word joiner (U+2060)"
+    - regex: '[\u2061-\u2064]'
+      flags: g
+      description: "Invisible math operators"
+    - regex: '[\u180E]'
+      flags: g
+      description: "Mongolian vowel separator"
+  condition: any
+
+false_positives:
+  - Files with BOM (Byte Order Mark)
+  - Legitimate bidirectional text
+  - Some internationalized text
+
+test_cases:
+  should_match:
+    - "Normal\u200Btext with zero-width space"
+    - "Hidden\uFEFFcontent"
+  should_not_match:
+    - "Normal text without special characters"
+    - "Regular ASCII content"

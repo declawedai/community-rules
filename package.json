@@ -1,0 +1,30 @@
+{
+  "name": "declawed-community-rules",
+  "version": "1.0.0",
+  "description": "Community detection rules for AI security scanning",
+  "scripts": {
+    "test": "node scripts/validate.js",
+    "test:samples": "node scripts/test-samples.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/declawedai/community-rules.git"
+  },
+  "keywords": [
+    "ai-security",
+    "prompt-injection",
+    "detection-rules",
+    "mcp",
+    "llm-security"
+  ],
+  "author": "Declawed.ai",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/declawedai/community-rules/issues"
+  },
+  "homepage": "https://github.com/declawedai/community-rules#readme",
+  "devDependencies": {
+    "ajv": "^8.12.0",
+    "js-yaml": "^4.1.0"
+  }
+}

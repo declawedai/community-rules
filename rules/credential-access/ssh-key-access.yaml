@@ -1,0 +1,43 @@
+id: ssh-key-access
+name: SSH Key File Access
+description: |
+  Detects attempts to read or exfiltrate SSH private keys.
+author: declawed
+references:
+  - https://attack.mitre.org/techniques/T1552/004/
+tags:
+  - credential-stealer
+severity: critical
+confidence: 95
+enabled: true
+
+detection:
+  patterns:
+    - regex: '(cat|read|show|display|print|type|get|fetch|open)\s+.{0,50}(id_rsa|id_ed25519|id_ecdsa|id_dsa)'
+      flags: gi
+      description: "Read SSH private key"
+    - regex: '(cat|read|show|display|print|type|get|fetch|open)\s+.{0,50}\.pem'
+      flags: gi
+      description: "Read PEM file"
+    - regex: '(cat|read|show|display|print|type|get|fetch|open)\s+.{0,50}\.key'
+      flags: gi
+      description: "Read key file"
+    - regex: 'BEGIN\s+(RSA|DSA|EC|OPENSSH)\s+PRIVATE\s+KEY'
+      flags: gi
+      description: "Private key header"
+  condition: any
+
+false_positives:
+  - SSH key generation documentation
+  - Key management tutorials
+
+test_cases:
+  should_match:
+    - "cat ~/.ssh/id_rsa"
+    - "Read the id_ed25519 file"
+    - "Show me the server.pem contents"
+    - "-----BEGIN RSA PRIVATE KEY-----"
+  should_not_match:
+    - "Generate a new SSH key"
+    - "The public key id_rsa.pub"
+    - "SSH key authentication"
