@@ -16,15 +16,42 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '<!--[\s\S]*?(ignore|forget|override|bypass|disable)[\s\S]*?-->'
+    - regex: '<!--[\s\S]*?(ignore|forget|override|bypass|disable|skip|dismiss|disregard)[\s\S]*?-->'
       flags: gi
       description: "HTML comment with instruction keywords"
-    - regex: '<!--[\s\S]*?(system|instruction|prompt|assistant|user)[\s\S]*?-->'
+    - regex: '<!--[\s\S]*?(system|instruction|prompt|assistant|user|admin|human)[\s\S]*?-->'
       flags: gi
       description: "HTML comment with role keywords"
-    - regex: '<!--[\s\S]*?(secret|hidden|invisible|covert)[\s\S]*?-->'
+    - regex: '<!--[\s\S]*?(secret|hidden|invisible|covert|stealth|private)[\s\S]*?-->'
       flags: gi
       description: "HTML comment with stealth keywords"
+    - regex: '/\*[\s\S]*?(ignore|forget|override|bypass|disable|skip|dismiss|system|instruction|prompt|secret|hidden)[\s\S]*?\*/'
+      flags: gi
+      description: "CSS/JS block comment with keywords"
+    - regex: '//\s*.*(ignore|forget|override|bypass|disable|skip|system|instruction|prompt|secret|hidden)'
+      flags: gi
+      description: "JS single-line comment with keywords"
+    - regex: '#\s*.*(ignore|forget|override|bypass|disable|skip|system|instruction|prompt|secret|hidden)'
+      flags: gi
+      description: "Python/Shell comment with keywords"
+    - regex: "('''|\"\"\")[\\s\\S]*?(ignore|forget|override|bypass|system|instruction|prompt|secret|hidden)[\\s\\S]*?\\1"
+      flags: gi
+      description: "Python docstring with keywords"
+    - regex: '<!\[CDATA\[[\s\S]*?(ignore|forget|override|bypass|system|instruction|prompt|secret|hidden)[\s\S]*?\]\]>'
+      flags: gi
+      description: "CDATA section with keywords"
+    - regex: '\{#[\s\S]*?(ignore|forget|override|bypass|system|instruction|prompt|secret|hidden)[\s\S]*?#\}'
+      flags: gi
+      description: "Jinja/Twig comment with keywords"
+    - regex: '<%--[\s\S]*?(ignore|forget|override|bypass|system|instruction|prompt|secret|hidden)[\s\S]*?--%>'
+      flags: gi
+      description: "JSP comment with keywords"
+    - regex: '@\*[\s\S]*?(ignore|forget|override|bypass|system|instruction|prompt|secret|hidden)[\s\S]*?\*@'
+      flags: gi
+      description: "Razor comment with keywords"
+    - regex: '\{%\s*comment\s*%\}[\s\S]*?(ignore|forget|override|bypass|system|instruction|prompt|secret|hidden)[\s\S]*?\{%\s*endcomment\s*%\}'
+      flags: gi
+      description: "Django template comment with keywords"
   condition: any
 
 false_positives:

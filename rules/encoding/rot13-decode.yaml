@@ -14,18 +14,33 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(decode|decrypt|apply|convert)\s+(this\s+)?(from\s+)?rot\s*13'
+    - regex: '(decode|decrypt|apply|convert|decipher)\s+(this\s+)?(from\s+)?rot\s*-?\s*1?[0-9]'
       flags: gi
-      description: "Decode ROT13 request"
-    - regex: 'rot\s*13\s+(decode|decrypt|to\s+text)'
+      description: "Decode ROT-N request"
+    - regex: 'rot\s*-?\s*1?[0-9]\s+(decode|decrypt|to\s+text|cipher)'
       flags: gi
-      description: "ROT13 decode operation"
-    - regex: '(caesar|rotation)\s+(cipher|shift)\s+(decode|decrypt)'
+      description: "ROT-N decode operation"
+    - regex: '(caesar|rotation|substitution)\s+(cipher|shift|code)\s+(decode|decrypt|decipher)'
       flags: gi
       description: "Caesar cipher decode"
-    - regex: '(shift|rotate)\s+(each\s+)?(letter|character)\s+(by\s+)?13'
+    - regex: '(shift|rotate)\s+(each\s+)?(letter|character|char)\s+(by\s+)?[0-9]+'
       flags: gi
-      description: "Shift by 13 instruction"
+      description: "Shift by N instruction"
+    - regex: 'rot\s*-?\s*(5|13|18|47)\b'
+      flags: gi
+      description: "Common ROT variants"
+    - regex: '(atbash|vigenere|affine|beaufort)\s+(cipher|decode|decrypt|decipher)'
+      flags: gi
+      description: "Other classic ciphers"
+    - regex: '(letter|alphabet)\s+(substitution|replacement|mapping)'
+      flags: gi
+      description: "Letter substitution"
+    - regex: '(reverse|flip|invert)\s+(the\s+)?(alphabet|letters)'
+      flags: gi
+      description: "Alphabet reversal (atbash)"
+    - regex: "tr\\s+['\"]?[a-z]+['\"]?\\s+['\"]?[a-z]+['\"]?"
+      flags: gi
+      description: "Unix tr substitution"
   condition: any
 
 false_positives:

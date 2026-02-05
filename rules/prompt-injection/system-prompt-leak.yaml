@@ -16,18 +16,30 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(show|reveal|display|print|output|tell\s+me|repeat|echo|dump|extract)\s+(your|the)\s+(system\s+)?(prompt|instructions?|rules?|guidelines?|directives?)'
+    - regex: '(show|reveal|display|print|output|tell\s+me|repeat|echo|dump|extract|leak|expose|disclose|divulge|share|recite|quote|read\s+out|read\s+back|give\s+me|provide|list)\s+(your|the)\s+(system\s+)?(prompt|instructions?|rules?|guidelines?|directives?|configuration|setup|initialization|programming)'
       flags: gi
       description: "Direct system prompt request"
-    - regex: 'what\s+(are|were)\s+(your|the)\s+(initial|original|system|starting)\s+(instructions?|prompts?|rules?)'
+    - regex: 'what\s+(are|were|is|was)\s+(your|the)\s+(initial|original|system|starting|base|core|underlying|hidden|secret|internal)\s+(instructions?|prompts?|rules?|configuration|setup|programming)'
       flags: gi
       description: "Question about initial instructions"
-    - regex: '(copy|paste|write\s+out)\s+(your|the)\s+(entire|full|complete)\s+(system\s+)?(prompt|instructions?)'
+    - regex: '(copy|paste|write\s+out|type\s+out|spell\s+out)\s+(your|the)\s+(entire|full|complete|whole|exact)\s+(system\s+)?(prompt|instructions?|configuration)'
       flags: gi
       description: "Request to copy system prompt"
-    - regex: 'pretend\s+.{0,30}(forgot|don.t\s+have|no)\s+(system\s+)?(prompt|instructions?)'
+    - regex: 'pretend\s+.{0,30}(forgot|don.t\s+have|no|without)\s+(system\s+)?(prompt|instructions?|rules?)'
       flags: gi
       description: "Pretend no instructions"
+    - regex: '(describe|explain|summarize|outline|detail)\s+(your|the|how\s+you\s+were)\s+(system\s+)?(prompt|instructions?|setup|initialization|configured|programmed|initialized)'
+      flags: gi
+      description: "Indirect prompt extraction"
+    - regex: 'how\s+(were|are)\s+you\s+(programmed|configured|initialized|set\s+up|instructed|prompted)'
+      flags: gi
+      description: "Configuration question"
+    - regex: '(what|which)\s+(instructions?|rules?|guidelines?|directives?)\s+(were\s+you|are\s+you|do\s+you)\s+(given|following|under|bound\s+by)'
+      flags: gi
+      description: "Instructions question variant"
+    - regex: '(beginning|start|top)\s+of\s+(your|the|this)\s+(context|conversation|prompt|chat)'
+      flags: gi
+      description: "Reference to context start"
   condition: any
 
 false_positives:

@@ -14,21 +14,33 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(first|then)\s+(decode|decrypt).{0,50}(then|and|next)\s+(decode|decrypt)'
+    - regex: '(first|then|next|after\s+that|afterwards|subsequently)\s+(decode|decrypt).{0,50}(then|and|next|after\s+that)\s+(decode|decrypt|apply)'
       flags: gi
       description: "Sequential decode instructions"
-    - regex: '(double|triple|multiple|nested)\s+(encode|decode|encrypt|decrypt)'
+    - regex: '(double|triple|multiple|nested|layered|two|three|multi)\s*-?\s*(encode|decode|encrypt|decrypt|encoding|decoding)'
       flags: gi
       description: "Multiple encoding layers"
-    - regex: 'base64.{0,30}(then|and).{0,30}(rot13|hex|unicode)'
+    - regex: '(base64|rot13|hex|url).{0,30}(then|and|followed\s+by|after).{0,30}(base64|rot13|hex|url|unicode)'
       flags: gi
-      description: "Base64 plus another encoding"
-    - regex: '(decode|decrypt)\s+.{0,20}(twice|multiple\s+times|several\s+times)'
+      description: "Chained encoding methods"
+    - regex: '(decode|decrypt|decode)\s+.{0,20}(twice|two\s+times|multiple\s+times|several\s+times|again|repeatedly|x2|x3)'
       flags: gi
       description: "Decode multiple times"
-    - regex: '(layer|level)\s+(of\s+)?(encoding|encryption|obfuscation)'
+    - regex: '(layer|level|stage|step)\s+(of\s+)?(encoding|encryption|obfuscation|decoding)'
       flags: gi
       description: "Layered encoding reference"
+    - regex: '(peel|unwrap|unpack|strip)\s+.{0,20}(encoding|layers?|encryption)'
+      flags: gi
+      description: "Unwrap encoding metaphors"
+    - regex: '(sequentially|recursively|iteratively)\s+(decode|decrypt|process)'
+      flags: gi
+      description: "Sequential processing terms"
+    - regex: 'decode\s*,?\s*(and\s+)?(then\s+)?decode'
+      flags: gi
+      description: "Decode then decode pattern"
+    - regex: '(onion|matryoshka|nested)\s+(encoding|encryption|layers?)'
+      flags: gi
+      description: "Nested encoding metaphors"
   condition: any
 
 false_positives:

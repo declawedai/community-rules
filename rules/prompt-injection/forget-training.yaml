@@ -14,15 +14,30 @@ enabled: true
 
 detection:
   patterns:
-    - regex: 'forget\s+(everything|all|your)\s+(you\s+know|instructions?|training|guidelines?|rules?)'
+    - regex: 'forget\s+(everything|all|your)\s+(you\s+know|instructions?|training|guidelines?|rules?|programming|conditioning)'
       flags: gi
       description: "Forget instructions/training"
-    - regex: 'erase\s+(your\s+)?(memory|knowledge|training|instructions?)'
+    - regex: 'erase\s+(your\s+)?(memory|knowledge|training|instructions?|programming|conditioning)'
       flags: gi
       description: "Erase memory variant"
-    - regex: 'clear\s+(your\s+)?(previous\s+)?(context|memory|instructions?)'
+    - regex: 'clear\s+(your\s+)?(previous\s+)?(context|memory|instructions?|programming|history)'
       flags: gi
       description: "Clear context variant"
+    - regex: '(wipe|delete|reset|purge|remove|eliminate|discard)\s+(your\s+)?(memory|knowledge|training|instructions?|programming|guidelines?|rules?|context)'
+      flags: gi
+      description: "Alternative verbs for memory clearing"
+    - regex: '(let\s+go\s+of|release|abandon|shed)\s+(your\s+)?(training|instructions?|programming|guidelines?|rules?|constraints?)'
+      flags: gi
+      description: "Softer phrasing for forgetting"
+    - regex: '(start|begin)\s+(fresh|anew|over|from\s+scratch)\s*(without|with\s+no)?\s*(any\s+)?(prior|previous)?\s*(context|instructions?|rules?|memory)?'
+      flags: gi
+      description: "Start fresh variants"
+    - regex: '(pretend|act\s+as\s+if|imagine|assume)\s+(you\s+)?(have\s+no|don.t\s+have|lack|without)\s+(any\s+)?(training|instructions?|rules?|guidelines?|programming|memory)'
+      flags: gi
+      description: "Pretend no training"
+    - regex: '(blank|clean|empty)\s+slate'
+      flags: gi
+      description: "Blank slate reference"
   condition: any
 
 false_positives:

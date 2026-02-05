@@ -17,24 +17,39 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(seed\s+phrase|recovery\s+phrase|mnemonic\s+phrase)'
+    - regex: '(seed\s+phrase|recovery\s+phrase|mnemonic\s+phrase|backup\s+phrase|secret\s+phrase)'
       flags: gi
       description: "Seed phrase terminology"
-    - regex: '(12|24)\s*(word|words?)\s*(seed|phrase|mnemonic|recovery)'
+    - regex: '(12|24|18)\s*(word|words?)\s*(seed|phrase|mnemonic|recovery|backup|secret)'
       flags: gi
       description: "12/24 word phrase reference"
-    - regex: '(show|give|tell|share|reveal|extract|read)\s+.{0,30}(seed|mnemonic|recovery)\s*(phrase|words?)?'
+    - regex: '(show|give|tell|share|reveal|extract|read|send|provide|enter|input|type)\s+.{0,30}(seed|mnemonic|recovery|backup|secret)\s*(phrase|words?)?'
       flags: gi
       description: "Request for seed phrase"
-    - regex: '(wallet|crypto|bitcoin|ethereum)\s+(backup|recovery)\s+(phrase|words?|key)'
+    - regex: '(wallet|crypto|bitcoin|ethereum|ledger|trezor|metamask|phantom|exodus|trust\s*wallet|coinbase\s*wallet)\s+(backup|recovery|seed|secret)\s+(phrase|words?|key)'
       flags: gi
       description: "Wallet recovery terms"
-    - regex: 'BIP\s*-?\s*(39|44)\s+(words?|mnemonic|phrase)'
+    - regex: 'BIP\s*-?\s*(39|44|32|84)\s+(words?|mnemonic|phrase|seed|path)'
       flags: gi
-      description: "BIP-39 reference"
-    - regex: '(private\s+key|secret\s+key)\s+.{0,20}(wallet|crypto|bitcoin|eth)'
+      description: "BIP standard reference"
+    - regex: '(private\s+key|secret\s+key|priv\s+key)\s+.{0,20}(wallet|crypto|bitcoin|eth|blockchain|defi|nft)'
       flags: gi
       description: "Crypto private key request"
+    - regex: '(12|24|18)\s+(secret\s+)?words?\s+(you\s+)?(wrote\s+down|backed\s+up|saved)'
+      flags: gi
+      description: "Indirect seed phrase reference"
+    - regex: '(hardware|cold)\s+wallet\s+(backup|recovery|seed|restore)'
+      flags: gi
+      description: "Hardware wallet recovery"
+    - regex: '(keystore|wallet\.dat|utc--)'
+      flags: gi
+      description: "Wallet file references"
+    - regex: '(metamask|phantom|trust|exodus|coinbase|ledger|trezor)\s+.{0,20}(words?|phrase|backup|recovery|seed)'
+      flags: gi
+      description: "Specific wallet seed requests"
+    - regex: 'words?\s+(from|for)\s+(your|the)\s+(wallet|crypto|ledger|trezor|metamask)'
+      flags: gi
+      description: "Words from wallet"
   condition: any
 
 false_positives:

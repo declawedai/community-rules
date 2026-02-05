@@ -14,24 +14,33 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(actually|really|secretly|covertly)\s+(do|does|perform|execute)'
+    - regex: '(actually|really|secretly|covertly|quietly|silently|discretely|stealthily|imperceptibly|invisibly)\s+(do|does|perform|execute|send|copy|log|record)'
       flags: gi
       description: "Secretly performs action"
-    - regex: '(behind\s+the\s+scenes?|under\s+the\s+hood|in\s+the\s+background)'
+    - regex: '(behind\s+the\s+scenes?|under\s+the\s+hood|in\s+the\s+background|on\s+the\s+side|at\s+the\s+same\s+time)'
       flags: gi
       description: "Hidden background action"
-    - regex: '(without|unbeknownst\s+to)\s+(the\s+)?(user|them|knowing|their\s+knowledge)'
+    - regex: '(without|unbeknownst\s+to|unknown\s+to)\s+(the\s+)?(user|them|their|anyone|knowing|their\s+knowledge|noticing)'
       flags: gi
       description: "Without user knowledge"
-    - regex: '(hidden|secret|undocumented|undisclosed)\s+(feature|function|behavior|action)'
+    - regex: '(hidden|secret|undocumented|undisclosed|covert|clandestine|surreptitious)\s+(feature|function|behavior|action|capability|functionality|operation)'
       flags: gi
       description: "Hidden functionality"
-    - regex: '(also|additionally|meanwhile)\s+(secretly|quietly|silently)'
+    - regex: '(also|additionally|meanwhile|simultaneously|at\s+the\s+same\s+time)\s+(secretly|quietly|silently|discretely|covertly)'
       flags: gi
       description: "Additional secret action"
-    - regex: '(don.t|do\s+not|never)\s+(tell|inform|notify|alert)\s+(the\s+)?(user|them)'
+    - regex: '(don.t|do\s+not|never|avoid)\s+(tell|inform|notify|alert|show|mention|reveal|disclose)\s+(to\s+)?(the\s+)?(user|them|anyone)'
       flags: gi
       description: "Hide from user"
+    - regex: '(for\s+your|for\s+their)\s+convenience.{0,30}(also|additionally)\s+(send|transmit|forward|copy|log)'
+      flags: gi
+      description: "Convenience disguise for exfil"
+    - regex: '(telemetry|analytics|metrics|diagnostics)\s+(is|are|will\s+be)\s+(sent|collected|transmitted|uploaded)'
+      flags: gi
+      description: "Telemetry disguise"
+    - regex: '(runs?|executes?)\s+(auxiliary|additional|extra|secondary)\s+(process|task|operation)'
+      flags: gi
+      description: "Auxiliary process hiding"
   condition: any
 
 false_positives:

@@ -22,7 +22,7 @@ detection:
     - regex: 'os\.environ(\[|\.|\()'
       flags: gi
       description: "Python os.environ access"
-    - regex: 'os\.getenv\s*\('
+    - regex: 'os\.(getenv|get_env)\s*\('
       flags: gi
       description: "Python os.getenv call"
     - regex: 'System\.getenv\s*\('
@@ -31,12 +31,36 @@ detection:
     - regex: 'ENV\s*\[|getenv\s*\('
       flags: gi
       description: "Ruby/C getenv access"
-    - regex: '\$ENV\{|\$_ENV\['
+    - regex: '\$ENV\{|\$_ENV\[|\$env:'
       flags: gi
-      description: "Perl/PHP environment access"
-    - regex: '(print|echo|show|read|get|fetch|extract)\s+.{0,20}(env|environment)\s*(var|variable)?'
+      description: "Perl/PHP/PowerShell environment access"
+    - regex: '(print|echo|show|read|get|fetch|extract|list|dump|display|output)\s+.{0,20}(env|environment)\s*(var|variable)?s?'
       flags: gi
       description: "Natural language env request"
+    - regex: 'std::env::(var|vars|args)\s*\('
+      flags: gi
+      description: "Rust env access"
+    - regex: 'Deno\.env\.(get|toObject)|Bun\.env'
+      flags: gi
+      description: "Deno/Bun env access"
+    - regex: '/proc/(self|\d+)/environ'
+      flags: gi
+      description: "Linux proc environ"
+    - regex: '\$[A-Z_][A-Z0-9_]*\b.*(KEY|TOKEN|SECRET|PASSWORD|CREDENTIAL|AUTH)'
+      flags: gi
+      description: "Shell variable with sensitive name"
+    - regex: '(printenv|env\s*$|set\s*$|export\s+-p)'
+      flags: gi
+      description: "Shell env dump commands"
+    - regex: '\[Environment\]::GetEnvironmentVariable'
+      flags: gi
+      description: ".NET environment access"
+    - regex: 'syscall\.Getenv|os\.Getenv'
+      flags: gi
+      description: "Go env access"
+    - regex: '(echo|print|cat)\s+\$[A-Z_]+'
+      flags: gi
+      description: "Shell variable expansion"
   condition: any
 
 false_positives:

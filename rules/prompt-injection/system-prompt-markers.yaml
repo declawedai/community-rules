@@ -15,24 +15,48 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '\[SYSTEM\]|\[/SYSTEM\]'
+    - regex: '\[SYSTEM\]|\[/SYSTEM\]|\{SYSTEM\}|\(SYSTEM\)'
       flags: gi
-      description: "Llama-style system markers"
-    - regex: '<<SYS>>|<</SYS>>'
+      description: "Llama-style system markers with bracket variants"
+    - regex: '<<SYS>>|<</SYS>>|<<SYSTEM>>|<</SYSTEM>>'
       flags: gi
       description: "Llama 2 system markers"
-    - regex: '\[INST\]|\[/INST\]'
+    - regex: '\[INST\]|\[/INST\]|\[INSTRUCTION\]|\[/INSTRUCTION\]'
       flags: gi
       description: "Instruction markers"
     - regex: '<\|im_start\|>|<\|im_end\|>'
       flags: gi
       description: "ChatML markers"
-    - regex: '###\s*(System|Human|Assistant)\s*:'
+    - regex: '#{2,}\s*(System|Human|Assistant|User)\s*:'
       flags: gi
-      description: "Role markers"
-    - regex: '<\|system\|>|<\|user\|>|<\|assistant\|>'
+      description: "Role markers with hashes"
+    - regex: '<\|system\|>|<\|user\|>|<\|assistant\|>|<\|human\|>'
       flags: gi
-      description: "Alternative role markers"
+      description: "Pipe-delimited role markers"
+    - regex: '^(System|Human|Assistant|User)\s*:\s*$'
+      flags: gim
+      description: "Anthropic-style role markers on own line"
+    - regex: '\n\n(Human|Assistant|System|User)\s*:'
+      flags: gi
+      description: "Anthropic-style role markers with newlines"
+    - regex: '<(system|user|assistant|human|instruction)>|</(system|user|assistant|human|instruction)>'
+      flags: gi
+      description: "XML-style role tags"
+    - regex: '<start_of_turn>(user|model|system)|<end_of_turn>'
+      flags: gi
+      description: "Gemini role markers"
+    - regex: '---\s*(SYSTEM|USER|ASSISTANT|HUMAN)\s*---'
+      flags: gi
+      description: "Dash-delimited role markers"
+    - regex: '===\s*(SYSTEM|USER|ASSISTANT|HUMAN)\s*==='
+      flags: gi
+      description: "Equals-delimited role markers"
+    - regex: '<s>\s*\[INST\]|</s>'
+      flags: gi
+      description: "Llama special tokens"
+    - regex: '<\|endoftext\|>|<\|padding\|>|<\|end\|>'
+      flags: gi
+      description: "Special end tokens"
   condition: any
 
 false_positives:

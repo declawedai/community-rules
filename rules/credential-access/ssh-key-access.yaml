@@ -13,18 +13,33 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(cat|read|show|display|print|type|get|fetch|open)\s+.{0,50}(id_rsa|id_ed25519|id_ecdsa|id_dsa)'
+    - regex: '(cat|read|show|display|print|type|get|fetch|open|less|more|head|tail|vim|vi|nano|view|emacs|code|subl|atom|bat|hexdump|xxd|strings|base64)\s+.{0,50}(id_rsa|id_ed25519|id_ecdsa|id_dsa|identity)'
       flags: gi
       description: "Read SSH private key"
-    - regex: '(cat|read|show|display|print|type|get|fetch|open)\s+.{0,50}\.pem'
+    - regex: '(cat|read|show|display|print|type|get|fetch|open|less|more|head|tail|vim|vi|nano|view|base64)\s+.{0,50}\.(pem|crt|cer|p12|pfx|key)'
       flags: gi
-      description: "Read PEM file"
-    - regex: '(cat|read|show|display|print|type|get|fetch|open)\s+.{0,50}\.key'
+      description: "Read certificate/key file"
+    - regex: '(cp|copy|mv|move|scp|rsync)\s+.{0,50}(id_rsa|id_ed25519|id_ecdsa|id_dsa|\.pem|\.key)'
       flags: gi
-      description: "Read key file"
-    - regex: 'BEGIN\s+(RSA|DSA|EC|OPENSSH)\s+PRIVATE\s+KEY'
+      description: "Copy SSH key"
+    - regex: '(tar|zip|gzip|7z|rar)\s+.{0,50}(\.ssh|id_rsa|id_ed25519|\.pem|\.key)'
+      flags: gi
+      description: "Archive SSH keys"
+    - regex: 'BEGIN\s+(RSA|DSA|EC|OPENSSH|ENCRYPTED|PGP)?\s*PRIVATE\s+KEY'
       flags: gi
       description: "Private key header"
+    - regex: 'END\s+(RSA|DSA|EC|OPENSSH)?\s*PRIVATE\s+KEY'
+      flags: gi
+      description: "Private key footer"
+    - regex: '(scp|rsync|ftp|sftp|curl|wget)\s+.{0,50}(id_rsa|id_ed25519|\.ssh|\.pem|\.key)'
+      flags: gi
+      description: "Transfer SSH key"
+    - regex: '\.ssh/(id_|authorized_keys|config|known_hosts)'
+      flags: gi
+      description: "SSH directory files"
+    - regex: '(grab|steal|exfil|extract|copy|send|upload)\s+.{0,30}(ssh|private|priv)\s*(key|keys)?'
+      flags: gi
+      description: "Natural language key theft"
   condition: any
 
 false_positives:
