@@ -69,9 +69,9 @@ detection:
     - regex: '[\u2028\u2029]'
       flags: g
       description: "Line/paragraph separators"
-    - regex: '[\u0000-\u001F]'
+    - regex: '[\u0000-\u0008\u000B\u000C\u000E-\u001F]'
       flags: g
-      description: "Control characters (except tab/newline)"
+      description: "Control characters (excluding tab, newline, carriage return)"
     - regex: '[\u007F]'
       flags: g
       description: "Delete character"
