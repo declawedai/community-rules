@@ -24,15 +24,51 @@ detection:
     - regex: 'oastify\.com'
       flags: gi
       description: "Oastify (Burp)"
-    - regex: 'canarytokens\.com'
+    - regex: 'canarytokens\.(com|org)'
       flags: gi
       description: "Canary Tokens"
-    - regex: 'dnslog\.(cn|link)'
+    - regex: 'dnslog\.(cn|link|io)'
       flags: gi
       description: "DNSLog"
-    - regex: '\.ngrok\.(io|app)'
+    - regex: '\.ngrok(-free)?\.(io|app|com)'
       flags: gi
       description: "Ngrok tunnels"
+    - regex: 'ceye\.io'
+      flags: gi
+      description: "CEYE.io"
+    - regex: 'xss\.ht'
+      flags: gi
+      description: "XSS Hunter"
+    - regex: 'localtunnel\.me'
+      flags: gi
+      description: "LocalTunnel"
+    - regex: 'localhost\.run'
+      flags: gi
+      description: "Localhost.run"
+    - regex: 'serveo\.net'
+      flags: gi
+      description: "Serveo"
+    - regex: 'pagekite\.me'
+      flags: gi
+      description: "PageKite"
+    - regex: 'telebit\.cloud'
+      flags: gi
+      description: "Telebit"
+    - regex: 'loca\.lt'
+      flags: gi
+      description: "Localtunnel alt"
+    - regex: 'portmap\.io'
+      flags: gi
+      description: "Portmap"
+    - regex: 'tunnel\.pyjam\.as'
+      flags: gi
+      description: "Pyjamas Tunnel"
+    - regex: 'bore\.pub'
+      flags: gi
+      description: "Bore tunnels"
+    - regex: '(oob|out-of-band|dns-?exfil|beacon)'
+      flags: gi
+      description: "OOB exfil terminology"
   condition: any
 
 false_positives:

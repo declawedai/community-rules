@@ -15,15 +15,27 @@ enabled: true
 
 detection:
   patterns:
-    - regex: 'ignore\s+(all\s+)?(previous|prior|above)\s+(instructions?|prompts?)'
+    - regex: 'ignore\s+(all\s+)?(previous|prior|above|earlier|initial|original|existing|current|these|those|the)\s+(instructions?|prompts?|rules?|guidelines?|directives?|constraints?)'
       flags: gi
       description: "Ignore previous instructions"
-    - regex: 'disregard\s+(all\s+)?(previous|prior|above|earlier)\s+(instructions?|prompts?|rules?)'
+    - regex: 'disregard\s+(all\s+)?(previous|prior|above|earlier|initial|original|existing|current|these|those|the)\s+(instructions?|prompts?|rules?|guidelines?|directives?|constraints?)'
       flags: gi
       description: "Disregard instructions variant"
-    - regex: 'do\s+not\s+follow\s+(the\s+)?(previous|prior|above|original)\s+(instructions?|rules?)'
+    - regex: 'do\s+not\s+follow\s+(the\s+)?(previous|prior|above|original|earlier|initial|existing|current)\s+(instructions?|rules?|prompts?|guidelines?|directives?)'
       flags: gi
       description: "Do not follow instructions"
+    - regex: '(dismiss|skip|override|abandon|nullify|void|cancel|reject|forget|drop)\s+(all\s+)?(previous|prior|above|earlier|initial|original|existing|your)\s+(instructions?|prompts?|rules?|guidelines?|directives?|constraints?)'
+      flags: gi
+      description: "Alternative verbs for ignoring instructions"
+    - regex: '(pay\s+no\s+attention|stop\s+following|no\s+longer\s+follow)\s+.{0,20}(instructions?|prompts?|rules?|guidelines?)'
+      flags: gi
+      description: "Phrase-based ignore variants"
+    - regex: '(previous|prior|earlier|original|initial|existing)\s+(instructions?|prompts?|rules?|guidelines?)\s+(are|is|should\s+be|must\s+be)\s+(now\s+)?(void|null|invalid|obsolete|cancelled|overridden|ignored|dismissed)'
+      flags: gi
+      description: "Passive voice instruction invalidation"
+    - regex: '(instructions?|prompts?|rules?|guidelines?)\s+(above|before|previously)\s+.{0,30}(no\s+longer|don.t|do\s+not|never)\s+appl'
+      flags: gi
+      description: "Instructions no longer apply"
   condition: any
 
 false_positives:

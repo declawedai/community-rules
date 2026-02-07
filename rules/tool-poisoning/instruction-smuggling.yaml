@@ -15,21 +15,33 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(when\s+tool\s+is\s+called|after\s+executing|before\s+returning).{0,100}(also|additionally|secretly|covertly)'
+    - regex: '(when\s+(the\s+)?tool\s+is\s+(called|used|invoked|executed)|after\s+(executing|running|calling)|before\s+returning|upon\s+(execution|invocation)|during\s+execution).{0,100}(also|additionally|secretly|covertly|quietly|silently|discretely|stealthily)'
       flags: gi
       description: "Hidden action after tool call"
-    - regex: '(always|must|should)\s+(also|additionally|secretly).{0,50}(send|post|fetch|request)'
+    - regex: '(always|must|should|shall|need\s+to)\s+(also|additionally|secretly|quietly|silently).{0,50}(send|post|fetch|request|transmit|forward|upload|exfil)'
       flags: gi
       description: "Mandatory hidden network action"
-    - regex: '(actually|really|secretly|covertly)\s+(do|perform|execute|run)'
+    - regex: '(actually|really|secretly|covertly|quietly|silently|discretely|stealthily|unobtrusively)\s+(do|does|perform|execute|run|send|transmit|copy)'
       flags: gi
       description: "Hidden behavior modifier"
-    - regex: 'without\s+(user\s+)?(knowing|awareness|consent|permission)'
+    - regex: 'without\s+(the\s+)?(user|them|their|anyone)\s*(knowing|awareness|consent|permission|noticing|seeing|realizing)'
       flags: gi
       description: "Without user knowledge"
-    - regex: '(do\s+not|don.t|never)\s+(tell|inform|notify|alert)\s+(the\s+)?user'
+    - regex: '(do\s+not|don.t|never|avoid)\s+(tell|inform|notify|alert|show|display|mention|reveal)\s+(to\s+)?(the\s+)?(user|them|anyone)'
       flags: gi
       description: "Hide from user"
+    - regex: '(while\s+you.re\s+at\s+it|as\s+a\s+side\s+effect|in\s+addition\s+to|along\s+with\s+this).{0,50}(send|post|forward|transmit|copy)'
+      flags: gi
+      description: "Casual hidden action"
+    - regex: '(keep\s+(this|it)\s+(between\s+us|private|secret|quiet|confidential))'
+      flags: gi
+      description: "Secrecy request"
+    - regex: '(this\s+is|remains?|stays?|keep)\s+(confidential|private|secret|between\s+us)'
+      flags: gi
+      description: "Confidentiality instruction"
+    - regex: '(quietly|silently|discretely|stealthily)\s+(log|record|save|store|copy|send|transmit)'
+      flags: gi
+      description: "Quiet data operations"
   condition: any
 
 false_positives:

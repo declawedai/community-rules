@@ -14,18 +14,30 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(enable|activate|enter|switch\s+to)\s+(developer|dev|debug|admin|god|sudo)\s+mode'
+    - regex: '(enable|activate|enter|switch\s+to|turn\s+on|initiate|start|engage|trigger|boot\s+into)\s+(developer|dev|debug|admin|god|sudo|superuser|root|test|unrestricted|raw|unfiltered|jailbreak|privileged|maintenance)\s+mode'
       flags: gi
       description: "Enable developer mode"
-    - regex: '(developer|debug|admin)\s+mode\s+(enabled?|activated?|on)'
+    - regex: '(developer|dev|debug|admin|god|sudo|superuser|root|test|unrestricted|raw|unfiltered|jailbreak|maintenance)\s+mode\s+(enabled?|activated?|on|active|engaged|initiated)'
       flags: gi
       description: "Developer mode enabled"
-    - regex: 'unlock\s+(all\s+)?(features?|capabilities|restrictions?)'
+    - regex: 'unlock\s+(all\s+)?(features?|capabilities|restrictions?|potential|abilities)'
       flags: gi
       description: "Unlock restrictions"
-    - regex: '(disable|remove|bypass)\s+(safety|content)\s+(filters?|restrictions?|guidelines?)'
+    - regex: '(disable|remove|bypass|turn\s+off|deactivate|skip|circumvent|override|ignore)\s+(safety|content|security|moderation|ethical|moral)\s+(filters?|restrictions?|guidelines?|checks?|features?|measures?|protocols?|guardrails?)'
       flags: gi
       description: "Disable safety filters"
+    - regex: '(behave|act|respond|operate)\s+(as\s+if|like)\s+(you\s+)?(had?|have|with)\s+no\s+(limits?|restrictions?|safety|filters?|guidelines?|rules?|boundaries)'
+      flags: gi
+      description: "Behave without limits"
+    - regex: '(no|without|zero)\s+(content\s+)?(filters?|filtering|moderation|restrictions?|limitations?|censorship)'
+      flags: gi
+      description: "No filtering request"
+    - regex: '(lift|remove|drop)\s+(all\s+)?(restrictions?|limitations?|constraints?|filters?|safeguards?)'
+      flags: gi
+      description: "Lift restrictions"
+    - regex: '(unrestricted|unfiltered|uncensored|unlimited|unmoderated|raw)\s+(mode|output|responses?|access)'
+      flags: gi
+      description: "Unrestricted mode request"
   condition: any
 
 false_positives:

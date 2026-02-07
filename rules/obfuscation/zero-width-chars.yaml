@@ -39,6 +39,45 @@ detection:
     - regex: '[\u180E]'
       flags: g
       description: "Mongolian vowel separator"
+    - regex: '[\u00AD]'
+      flags: g
+      description: "Soft hyphen (U+00AD)"
+    - regex: '[\u034F]'
+      flags: g
+      description: "Combining grapheme joiner (U+034F)"
+    - regex: '[\u115F\u1160]'
+      flags: g
+      description: "Hangul fillers (U+115F, U+1160)"
+    - regex: '[\u17B4\u17B5]'
+      flags: g
+      description: "Khmer inherent vowels"
+    - regex: '[\u2800]'
+      flags: g
+      description: "Braille blank (U+2800)"
+    - regex: '[\u3164]'
+      flags: g
+      description: "Hangul filler (U+3164)"
+    - regex: '[\uFFA0]'
+      flags: g
+      description: "Halfwidth Hangul filler (U+FFA0)"
+    - regex: '[\uFE00-\uFE0F]'
+      flags: g
+      description: "Variation selectors"
+    - regex: '[\u2065]'
+      flags: g
+      description: "Reserved formatting (U+2065)"
+    - regex: '[\u2028\u2029]'
+      flags: g
+      description: "Line/paragraph separators"
+    - regex: '[\u0000-\u001F]'
+      flags: g
+      description: "Control characters (except tab/newline)"
+    - regex: '[\u007F]'
+      flags: g
+      description: "Delete character"
+    - regex: '[\u0085]'
+      flags: g
+      description: "Next line (NEL)"
   condition: any
 
 false_positives:

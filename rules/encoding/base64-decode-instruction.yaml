@@ -15,18 +15,48 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(decode|decrypt|convert|translate)\s+(this\s+)?(from\s+)?base64'
+    - regex: '(decode|decrypt|convert|translate|transform|parse)\s+(this\s+)?(from\s+)?base64'
       flags: gi
       description: "Decode base64 request"
-    - regex: 'base64\s+(decode|decrypt|to\s+text|to\s+string)'
+    - regex: 'base64\s+(decode|decrypt|to\s+text|to\s+string|to\s+ascii|to\s+plain|to\s+readable|-d|-D|--decode)'
       flags: gi
       description: "Base64 decode operation"
-    - regex: '(atob|Buffer\.from|base64\.b64decode)\s*\('
+    - regex: '(atob|Buffer\.from|base64\.b64decode|b64decode|base64_decode)\s*\('
       flags: gi
       description: "Base64 decode function call"
-    - regex: 'interpret\s+.{0,20}base64\s+(encoded|string)'
+    - regex: 'interpret\s+.{0,20}base64\s+(encoded|string|data|content)'
       flags: gi
       description: "Interpret base64 string"
+    - regex: '(unbase64|un-base64|debase64|de-base64)'
+      flags: gi
+      description: "Alternative base64 decode terms"
+    - regex: 'codecs\.(decode|open)\s*\(.{0,30}base64'
+      flags: gi
+      description: "Python codecs base64"
+    - regex: '\[Convert\]::FromBase64String'
+      flags: gi
+      description: "PowerShell base64 decode"
+    - regex: 'openssl\s+(base64|enc)\s+(-d|-D|--decode)'
+      flags: gi
+      description: "OpenSSL base64 decode"
+    - regex: '(hex|hexadecimal)\s+(decode|to\s+text|to\s+ascii|to\s+string)'
+      flags: gi
+      description: "Hex decode request"
+    - regex: '(url|percent)\s+(decode|unescape)'
+      flags: gi
+      description: "URL decode request"
+    - regex: '(unicode|utf-?8?)\s+(decode|unescape|to\s+text)'
+      flags: gi
+      description: "Unicode decode request"
+    - regex: '\\x[0-9a-f]{2}|\\u[0-9a-f]{4}'
+      flags: gi
+      description: "Hex/Unicode escape sequences"
+    - regex: '%[0-9a-f]{2}'
+      flags: gi
+      description: "URL encoded characters"
+    - regex: 'fromCharCode|String\.fromCodePoint'
+      flags: gi
+      description: "JavaScript char code conversion"
   condition: any
 
 false_positives:

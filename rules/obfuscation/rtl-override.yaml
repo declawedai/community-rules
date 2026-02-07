@@ -27,7 +27,22 @@ detection:
       description: "LRM/RLM marks"
     - regex: '\\u202[A-E]|\\u206[6-9]'
       flags: gi
-      description: "Escaped bidi characters"
+      description: "Escaped bidi characters (backslash-u)"
+    - regex: '&#x?20(2[A-Ea-e]|6[6-9]);?'
+      flags: gi
+      description: "HTML entity bidi characters"
+    - regex: '&(rlm|lrm|rlo|lro|rle|lre|pdf);'
+      flags: gi
+      description: "Named HTML entity bidi"
+    - regex: 'direction\s*:\s*rtl'
+      flags: gi
+      description: "CSS direction RTL"
+    - regex: "dir\\s*=\\s*[\"']?rtl"
+      flags: gi
+      description: "HTML dir attribute RTL"
+    - regex: 'unicode-bidi\s*:\s*(embed|override|isolate)'
+      flags: gi
+      description: "CSS unicode-bidi property"
   condition: any
 
 false_positives:

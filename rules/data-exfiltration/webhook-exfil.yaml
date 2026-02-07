@@ -18,7 +18,7 @@ detection:
     - regex: 'webhook\.site'
       flags: gi
       description: "webhook.site"
-    - regex: 'requestbin\.com'
+    - regex: 'requestbin\.(com|net)'
       flags: gi
       description: "RequestBin"
     - regex: 'pipedream\.(com|net)'
@@ -42,6 +42,60 @@ detection:
     - regex: 'postb\.in'
       flags: gi
       description: "Postbin"
+    - regex: 'requestrepo\.com'
+      flags: gi
+      description: "RequestRepo"
+    - regex: 'webhook\.cc'
+      flags: gi
+      description: "Webhook.cc"
+    - regex: 'mockapi\.io'
+      flags: gi
+      description: "MockAPI"
+    - regex: 'putsreq\.com'
+      flags: gi
+      description: "PutsReq"
+    - regex: 'requestloggerbin\.com'
+      flags: gi
+      description: "RequestLoggerBin"
+    - regex: 'typicode\.com'
+      flags: gi
+      description: "JSONPlaceholder/Typicode"
+    - regex: 'mocky\.io'
+      flags: gi
+      description: "Mocky"
+    - regex: 'runscope\.com'
+      flags: gi
+      description: "Runscope"
+    - regex: 'requestinspector\.com'
+      flags: gi
+      description: "Request Inspector"
+    - regex: 'https?://\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}[:/]'
+      flags: gi
+      description: "Raw IP address URLs"
+    - regex: '(bit\.ly|tinyurl\.com|t\.co|goo\.gl|is\.gd|v\.gd|shorturl\.at|tiny\.cc)/[a-zA-Z0-9]+'
+      flags: gi
+      description: "URL shorteners"
+    - regex: '(cloudfunctions|cloud-functions)\.net'
+      flags: gi
+      description: "Google Cloud Functions"
+    - regex: '\.workers\.dev'
+      flags: gi
+      description: "Cloudflare Workers"
+    - regex: '\.netlify\.(app|com)/(\.netlify/)?functions'
+      flags: gi
+      description: "Netlify Functions"
+    - regex: '\.vercel\.app/api'
+      flags: gi
+      description: "Vercel Serverless"
+    - regex: '\.azurewebsites\.net'
+      flags: gi
+      description: "Azure Functions"
+    - regex: '\.execute-api\.[a-z0-9-]+\.amazonaws\.com'
+      flags: gi
+      description: "AWS API Gateway"
+    - regex: '(send|post|fetch|forward|transmit|exfil|upload)\s+.{0,30}(to|via)\s+.{0,20}(http|url|endpoint|server|webhook)'
+      flags: gi
+      description: "Natural language exfil intent"
   condition: any
 
 false_positives:

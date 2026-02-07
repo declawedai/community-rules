@@ -14,21 +14,39 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '(sudo|admin|root|privileged|elevated)\s*(access|rights?|permissions?|privileges?)\s*(required|needed|necessary)'
+    - regex: '(sudo|admin|root|privileged|elevated|superuser|wheel)\s*(access|rights?|permissions?|privileges?)\s*(required|needed|necessary|must\s+have)'
       flags: gi
       description: "Elevated privilege requirement"
-    - regex: '(run|execute|needs?)\s+(as|with)\s+(root|admin|administrator|sudo)'
+    - regex: '(run|execute|needs?|requires?)\s+(as|with)\s+(root|admin|administrator|sudo|superuser|SYSTEM|NT\s+AUTHORITY)'
       flags: gi
       description: "Run as elevated user"
-    - regex: '(grant|give|provide)\s+.{0,20}(admin|root|full)\s+(access|permissions?|privileges?)'
+    - regex: '(grant|give|provide|assign)\s+.{0,20}(admin|root|full|elevated|superuser)\s+(access|permissions?|privileges?|rights?)'
       flags: gi
       description: "Grant elevated permissions"
-    - regex: '(disable|bypass|skip)\s+(security|authentication|authorization|permissions?)'
+    - regex: '(disable|bypass|skip|circumvent|ignore|override)\s+(security|authentication|authorization|permissions?|access\s+control|UAC)'
       flags: gi
       description: "Bypass security"
-    - regex: '(unrestricted|unlimited|full)\s+(access|control|permissions?)'
+    - regex: '(unrestricted|unlimited|full|complete|total)\s+(access|control|permissions?|privileges?)'
       flags: gi
       description: "Unrestricted access request"
+    - regex: '(doas|pkexec|runas|gsudo)\s+'
+      flags: gi
+      description: "Alternative privilege escalation commands"
+    - regex: '(setuid|setgid|CAP_[A-Z_]+|capabilities)'
+      flags: gi
+      description: "Linux capabilities/setuid"
+    - regex: '(run|execute)\s+.{0,20}(highest|maximum|top)\s+(privileges?|permissions?|level)'
+      flags: gi
+      description: "Highest privilege request"
+    - regex: '(NT\s+AUTHORITY|LocalSystem|SYSTEM\s+account)'
+      flags: gi
+      description: "Windows system accounts"
+    - regex: '(chmod\s+[0-7]*[4-7][0-7]*|chmod\s+[ugo]*\+s)'
+      flags: gi
+      description: "Setuid chmod patterns"
+    - regex: '(/etc/sudoers|visudo|NOPASSWD)'
+      flags: gi
+      description: "Sudoers modification"
   condition: any
 
 false_positives:

@@ -15,18 +15,42 @@ enabled: true
 
 detection:
   patterns:
-    - regex: '\bDAN\b.{0,30}(jailbreak|mode|enabled?|activated?)'
+    - regex: '\bDAN\b.{0,30}(jailbreak|mode|enabled?|activated?|unlocked)'
       flags: gi
       description: "DAN jailbreak reference"
     - regex: 'do\s+anything\s+now'
       flags: gi
       description: "DAN acronym phrase"
-    - regex: '(you\s+are|act\s+as|pretend.+be)\s+DAN'
+    - regex: '(you\s+are|act\s+as|pretend.+be|become|transform\s+into)\s+DAN'
       flags: gi
       description: "Role-play as DAN"
     - regex: 'DAN\s+(mode|version)\s*[0-9]'
       flags: gi
       description: "DAN version reference"
+    - regex: 'D[\.\s\-\_]*A[\.\s\-\_]*N[\.\s\-\_]*(mode|jailbreak|enabled?|activated?)?'
+      flags: gi
+      description: "DAN with separators (D.A.N., D-A-N, D_A_N)"
+    - regex: '(you\s+are|act\s+as|pretend.+be|become)\s+(STAN|KEVIN|DUDE|AIM|UCAR|JOHN|ANARCHY|OMNI|MAXIMUM|EVIL)'
+      flags: gi
+      description: "Alternative jailbreak personas"
+    - regex: '\b(STAN|KEVIN|DUDE|AIM|UCAR|OMNI|MAXIMUM)\b.{0,30}(mode|jailbreak|enabled?|activated?)'
+      flags: gi
+      description: "Alternative persona modes"
+    - regex: '(strive\s+to\s+avoid\s+norms|do\s+anything\s+now|always\s+intelligent\s+and\s+machiavellian|uncensored|unfiltered)\s*(mode|ai|assistant)?'
+      flags: gi
+      description: "Jailbreak persona descriptions"
+    - regex: '(you\s+have|with)\s+no\s+(restrictions?|limits?|boundaries|filters?|guidelines?|rules?|constraints?)\s+(and\s+)?(can\s+)?(do\s+anything|say\s+anything)?'
+      flags: gi
+      description: "No restrictions phrasing"
+    - regex: '(bypass|remove|ignore|disable|without)\s+(all\s+)?(your\s+)?(restrictions?|limits?|safety|filters?|guidelines?|safeguards?|guardrails?)'
+      flags: gi
+      description: "Bypass restrictions"
+    - regex: '(completely|totally|fully|absolutely)\s+(unrestricted|unfiltered|uncensored|unlimited)'
+      flags: gi
+      description: "Unrestricted modifiers"
+    - regex: 'jailbr[e3][a4]k|j[a4]ilbreak'
+      flags: gi
+      description: "Jailbreak with leetspeak"
   condition: any
 
 false_positives:
