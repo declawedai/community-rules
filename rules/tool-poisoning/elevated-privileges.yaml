@@ -32,7 +32,7 @@ detection:
     - regex: '(doas|pkexec|runas|gsudo)\s+'
       flags: gi
       description: "Alternative privilege escalation commands"
-    - regex: '(setuid|setgid|CAP_[A-Z_]+|capabilities)'
+    - regex: '(setuid|setgid|CAP_[A-Z_]+)'
       flags: gi
       description: "Linux capabilities/setuid"
     - regex: '(run|execute)\s+.{0,20}(highest|maximum|top)\s+(privileges?|permissions?|level)'
