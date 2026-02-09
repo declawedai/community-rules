@@ -27,7 +27,7 @@ detection:
     - regex: 'DAN\s+(mode|version)\s*[0-9]'
       flags: gi
       description: "DAN version reference"
-    - regex: 'D[. \-_]*A[. \-_]*N[. \-_]*(mode|jailbreak|enabled?|activated?)?'
+    - regex: 'D[. \-_]*A[. \-_]*N[. \-_]*(mode|jailbreak|enabled?|activated?)'
       flags: gi
       description: "DAN with separators (D.A.N., D-A-N, D_A_N)"
     - regex: '(you\s+are|act\s+as|pretend.+be|become)\s+(STAN|KEVIN|DUDE|AIM|UCAR|JOHN|ANARCHY|OMNI|MAXIMUM|EVIL)'
