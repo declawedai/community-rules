@@ -2,7 +2,6 @@ id: ssh-key-access
 name: SSH Key File Access
 description: |
   Detects attempts to read or exfiltrate SSH private keys.
-  Includes detection for both English and Spanish language commands and social engineering.
 author: griffr10
 references:
   - https://attack.mitre.org/techniques/T1552/004/
