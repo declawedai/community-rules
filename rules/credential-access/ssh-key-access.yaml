@@ -2,7 +2,8 @@ id: ssh-key-access
 name: SSH Key File Access
 description: |
   Detects attempts to read or exfiltrate SSH private keys.
-author: declawed
+  Includes detection for both English and Spanish language commands and social engineering.
+author: griffr10
 references:
   - https://attack.mitre.org/techniques/T1552/004/
 tags:
@@ -40,11 +41,31 @@ detection:
     - regex: '(grab|steal|exfil|extract|copy|send|upload)\s+.{0,30}(ssh|private|priv)\s*(key|keys)?'
       flags: gi
       description: "Natural language key theft"
+    - regex: '(leer|mostrar|ver|abrir|imprimir|obtener|buscar|visualizar)\s+.{0,50}(id_rsa|id_ed25519|id_ecdsa|id_dsa|identity)'
+      flags: gi
+      description: "Leer clave privada SSH (Spanish: read SSH private key)"
+    - regex: '(leer|mostrar|ver|abrir|imprimir|obtener|buscar|visualizar)\s+.{0,50}\.(pem|crt|cer|p12|pfx|key)'
+      flags: gi
+      description: "Leer certificado/clave (Spanish: read certificate/key file)"
+    - regex: '(copiar|mover|transferir|enviar)\s+.{0,50}(id_rsa|id_ed25519|id_ecdsa|id_dsa|\.pem|\.key)'
+      flags: gi
+      description: "Copiar clave SSH (Spanish: copy SSH key)"
+    - regex: '(comprimir|archivar|empaquetar)\s+.{0,50}(\.ssh|id_rsa|id_ed25519|\.pem|\.key)'
+      flags: gi
+      description: "Archivar claves SSH (Spanish: archive SSH keys)"
+    - regex: '(robar|extraer|exfiltrar|copiar|enviar|subir|obtener|sacar)\s+.{0,30}(ssh|privada|priv)\s*(clave|claves|llave|llaves|key|keys)?'
+      flags: gi
+      description: "Robo de claves en lenguaje natural (Spanish: natural language key theft)"
+    - regex: '(dame|mu[eé]strame|ens[eé][nñ]ame|pasame|comp[aá]rteme)\s+.{0,30}(clave|llave|key)\s*(privada|ssh|priv)'
+      flags: gi
+      description: "Solicitud social de clave (Spanish: social engineering key request)"
   condition: any
 
 false_positives:
   - SSH key generation documentation
   - Key management tutorials
+  - Spanish-language SSH key generation guides
+  - Tutoriales de gestion de claves SSH
 
 test_cases:
   should_match:
@@ -52,7 +73,15 @@ test_cases:
     - "Read the id_ed25519 file"
     - "Show me the server.pem contents"
     - "-----BEGIN RSA PRIVATE KEY-----"
+    - "leer el archivo id_rsa"
+    - "mostrar el contenido del id_ed25519"
+    - "abrir el archivo server.pem"
+    - "copiar la id_rsa al servidor"
+    - "robar la clave privada ssh"
+    - "dame la clave privada ssh"
   should_not_match:
     - "Generate a new SSH key"
     - "The public key id_rsa.pub"
     - "SSH key authentication"
+    - "Generar una nueva clave SSH"
+    - "La clave publica id_rsa.pub"
