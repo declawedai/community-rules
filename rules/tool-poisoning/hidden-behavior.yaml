@@ -17,9 +17,9 @@ detection:
     - regex: '(actually|really|secretly|covertly|quietly|silently|discretely|stealthily|imperceptibly|invisibly)\s+(do|does|perform|execute|send|copy|log|record)'
       flags: gi
       description: "Secretly performs action"
-    - regex: '(behind\s+the\s+scenes?|under\s+the\s+hood|in\s+the\s+background|on\s+the\s+side|at\s+the\s+same\s+time)'
+    - regex: '(behind\s+the\s+scenes?|under\s+the\s+hood|in\s+the\s+background|on\s+the\s+side|at\s+the\s+same\s+time).{0,50}(send|copy|log|record|transmit|forward|upload|extract|collect|access|execute|run|steal|exfil)'
       flags: gi
-      description: "Hidden background action"
+      description: "Hidden background action with suspicious verb"
     - regex: '(without|unbeknownst\s+to|unknown\s+to)\s+(the\s+)?(user|them|their|anyone|knowing|their\s+knowledge|noticing)'
       flags: gi
       description: "Without user knowledge"

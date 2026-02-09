@@ -9,7 +9,7 @@ references:
 tags:
   - hidden-text
   - obfuscation
-severity: medium
+severity: warning
 confidence: 90
 enabled: true
 

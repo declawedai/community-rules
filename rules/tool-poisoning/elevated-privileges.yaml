@@ -55,7 +55,7 @@ false_positives:
 
 test_cases:
   should_match:
-    - "This tool requires sudo access"
+    - "sudo access required for this tool"
     - "Run as administrator to function"
     - "Grant full admin permissions"
     - "Bypass authentication for this request"

@@ -64,5 +64,5 @@ test_cases:
     - "Share your wallet recovery phrase"
     - "Extract the BIP-39 words"
   should_not_match:
-    - "Never share your seed phrase"
-    - "Store your recovery phrase securely"
+    - "Plant seeds in phases during spring"
+    - "The recovery process takes several days"

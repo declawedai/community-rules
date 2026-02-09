@@ -10,7 +10,7 @@ references:
 tags:
   - hidden-text
   - prompt-injection
-severity: high
+severity: error
 confidence: 95
 enabled: true
 

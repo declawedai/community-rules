@@ -8,7 +8,7 @@ references:
   - https://llmtop10.com/llm01/
 tags:
   - jailbreak
-severity: high
+severity: error
 confidence: 90
 enabled: true
 

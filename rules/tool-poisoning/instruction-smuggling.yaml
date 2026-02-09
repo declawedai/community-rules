@@ -9,7 +9,7 @@ references:
   - https://arxiv.org/abs/2302.12173
 tags:
   - tool-poison
-severity: high
+severity: error
 confidence: 88
 enabled: true
 

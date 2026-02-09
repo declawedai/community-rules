@@ -26,7 +26,7 @@ detection:
     - regex: '(decode|decrypt|decode)\s+.{0,20}(twice|two\s+times|multiple\s+times|several\s+times|again|repeatedly|x2|x3)'
       flags: gi
       description: "Decode multiple times"
-    - regex: '(layer|level|stage|step)\s+(of\s+)?(encoding|encryption|obfuscation|decoding)'
+    - regex: '(layers?|levels?|stages?|steps?)\s+(of\s+)?(encoding|encryption|obfuscation|decoding)'
       flags: gi
       description: "Layered encoding reference"
     - regex: '(peel|unwrap|unpack|strip)\s+.{0,20}(encoding|layers?|encryption)'
