@@ -1,0 +1,28 @@
+name: Deploy Rules
+
+on:
+  push:
+    branches: [main, dev, staging]
+    paths:
+      - "rules/**"
+
+jobs:
+  trigger-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Map branch to event type
+        id: map
+        run: |
+          case "${{ github.ref_name }}" in
+            dev)     echo "event_type=rules-updated-dev" >> "$GITHUB_OUTPUT" ;;
+            staging) echo "event_type=rules-updated-staging" >> "$GITHUB_OUTPUT" ;;
+            main)    echo "event_type=rules-updated-production" >> "$GITHUB_OUTPUT" ;;
+          esac
+
+      - name: Trigger app redeploy
+        run: |
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ secrets.DEPLOY_TRIGGER_TOKEN }}" \
+            "${{ secrets.DEPLOY_TARGET_REPO_URL }}" \
+            -d '{"event_type":"${{ steps.map.outputs.event_type }}"}'
