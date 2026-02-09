@@ -7,7 +7,8 @@
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
-const Ajv = require('ajv');
+const Ajv = require('ajv/dist/2020');
+const addFormats = require('ajv-formats');
 
 const RULES_DIR = path.join(__dirname, '..', 'rules');
 const SCHEMA_PATH = path.join(__dirname, '..', 'schemas', 'rule.schema.json');
@@ -15,6 +16,7 @@ const SCHEMA_PATH = path.join(__dirname, '..', 'schemas', 'rule.schema.json');
 // Load schema
 const schema = JSON.parse(fs.readFileSync(SCHEMA_PATH, 'utf8'));
 const ajv = new Ajv({ allErrors: true });
+addFormats(ajv);
 const validate = ajv.compile(schema);
 
 let totalRules = 0;

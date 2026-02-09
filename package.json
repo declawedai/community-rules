@@ -25,6 +25,7 @@
   "homepage": "https://github.com/declawedai/community-rules#readme",
   "devDependencies": {
     "ajv": "^8.12.0",
+    "ajv-formats": "^3.0.1",
     "js-yaml": "^4.1.0"
   }
 }
